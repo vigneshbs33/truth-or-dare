@@ -157,6 +157,12 @@
         🔥💀 ABSOLUTE CHAOS MODE - BRAIN ROT ACTIVATED! 💀🔥
     </div>
 
+    <!-- JavaScript Loading Status -->
+    <div id="jsStatus" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.9); color: white; padding: 20px; border-radius: 10px; z-index: 10000; display: none;">
+        <h3>🔍 JavaScript Loading Status</h3>
+        <div id="jsStatusContent"></div>
+    </div>
+
     <script src="js/config.js"></script>
     <script src="js/app.js"></script>
     
@@ -216,6 +222,25 @@
                 }
             }, 8000);
         });
+
+        // Check JavaScript loading status after 3 seconds
+        setTimeout(function() {
+            const jsStatus = document.getElementById('jsStatus');
+            const jsStatusContent = document.getElementById('jsStatusContent');
+            
+            if (typeof TRUTH_QUESTIONS === 'undefined' || typeof DARE_CHALLENGES === 'undefined') {
+                jsStatus.style.display = 'block';
+                jsStatusContent.innerHTML = `
+                    <p>❌ JavaScript files not loaded properly!</p>
+                    <p>Config.js loaded: ${typeof TRUTH_QUESTIONS !== 'undefined' ? '✅' : '❌'}</p>
+                    <p>App.js loaded: ${typeof showTruthPage === 'function' ? '✅' : '❌'}</p>
+                    <p>Check browser console (F12) for errors</p>
+                    <button onclick="location.reload()" style="padding: 10px; margin: 10px;">🔄 Reload Page</button>
+                `;
+            } else {
+                jsStatus.style.display = 'none';
+            }
+        }, 3000);
     </script>
 </body>
 </html>
