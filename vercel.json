@@ -8,6 +8,18 @@
   ],
   "routes": [
     {
+      "src": "/styles/(.*)",
+      "dest": "/styles/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/js/$1"
+    },
+    {
+      "src": "/database/(.*)",
+      "dest": "/database/$1"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }

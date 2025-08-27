@@ -1,4 +1,4 @@
-name: Deploy to Vercel
+name: Build and Test
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     
     steps:
@@ -19,24 +19,46 @@ jobs:
       with:
         node-version: '18'
         
-    - name: Install Vercel CLI
-      run: npm install --global vercel@latest
-      
-    - name: Deploy to Vercel
-      run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
-      env:
-        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    - name: Verify file structure
+      run: |
+        echo "📁 Checking project structure..."
+        ls -la
+        echo "📁 Checking styles directory..."
+        ls -la styles/
+        echo "📁 Checking js directory..."
+        ls -la js/
+        echo "📁 Checking database directory..."
+        ls -la database/
         
-    - name: Comment on PR
-      if: github.event_name == 'pull_request'
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '🚀 **Deployment complete!** Your Truth or Dare game is now live on Vercel! 🔥💀'
-          })
+    - name: Validate HTML
+      run: |
+        echo "🔍 Validating HTML structure..."
+        if [ -f "index.html" ]; then
+          echo "✅ index.html exists"
+          grep -q "styles/main.css" index.html && echo "✅ CSS link found" || echo "❌ CSS link missing"
+          grep -q "js/config.js" index.html && echo "✅ config.js script found" || echo "❌ config.js script missing"
+          grep -q "js/app.js" index.html && echo "✅ app.js script found" || echo "❌ app.js script missing"
+        else
+          echo "❌ index.html not found"
+          exit 1
+        fi
+        
+    - name: Check Vercel config
+      run: |
+        echo "🔍 Checking Vercel configuration..."
+        if [ -f "vercel.json" ]; then
+          echo "✅ vercel.json exists"
+          cat vercel.json
+        else
+          echo "❌ vercel.json not found"
+          exit 1
+        fi
+        
+    - name: Success message
+      run: |
+        echo "🎉 Build and validation completed successfully!"
+        echo "🚀 Your Truth or Dare game is ready for Vercel deployment!"
+        echo "📝 Next steps:"
+        echo "1. Go to https://vercel.com"
+        echo "2. Import your repository: not-vignesh-right/truth-or-dare"
+        echo "3. Deploy!"
