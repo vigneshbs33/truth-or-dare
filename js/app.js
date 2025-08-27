@@ -24,7 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (typeof TRUTH_QUESTIONS !== 'undefined' && typeof DARE_CHALLENGES !== 'undefined') {
             console.log('🎉 Game data loaded successfully!');
-            // Don't call loadRandomTruth/loadRandomDare here - wait for user interaction
+            loadRandomTruth();
+            loadRandomDare();
             setupEventListeners();
             startChaosMode(); // Start the chaos immediately!
             console.log('🚀 Game initialization complete!');
@@ -33,10 +34,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const truthText = document.getElementById('truthText');
             const dareText = document.getElementById('dareText');
             if (truthText && truthText.innerHTML.includes('Loading')) {
-                console.log('✅ Truth text ready for loading');
+                console.log('✅ Updating truth loading text...');
             }
             if (dareText && dareText.innerHTML.includes('Loading')) {
-                console.log('✅ Dare text ready for loading');
+                console.log('✅ Updating dare loading text...');
             }
         } else {
             console.error('❌ Game data not loaded! Check script loading order.');
@@ -117,15 +118,7 @@ function showTruthPage() {
     document.getElementById('mainPage').classList.remove('active');
     document.getElementById('truthPage').classList.add('active');
     document.getElementById('darePage').classList.remove('active');
-    
-    // Only load truth if data is ready
-    if (typeof TRUTH_QUESTIONS !== 'undefined' && TRUTH_QUESTIONS.length > 0) {
-        loadRandomTruth();
-    } else {
-        console.error('❌ Cannot load truth - TRUTH_QUESTIONS not ready');
-        document.getElementById('truthText').innerHTML = '❌ Error: Truth questions not loaded. Please refresh the page.';
-    }
-    
+    loadRandomTruth();
     createEmojiExplosion(); // Truth page gets emoji explosion!
 }
 
@@ -133,15 +126,7 @@ function showDarePage() {
     document.getElementById('mainPage').classList.remove('active');
     document.getElementById('truthPage').classList.remove('active');
     document.getElementById('darePage').classList.add('active');
-    
-    // Only load dare if data is ready
-    if (typeof DARE_CHALLENGES !== 'undefined' && DARE_CHALLENGES.length > 0) {
-        loadRandomDare();
-    } else {
-        console.error('❌ Cannot load dare - DARE_CHALLENGES not ready');
-        document.getElementById('dareText').innerHTML = '❌ Error: Dare challenges not loaded. Please refresh the page.';
-    }
-    
+    loadRandomDare();
     shakeScreen(); // Dare page gets screen shake!
 }
 
@@ -667,24 +652,5 @@ function checkGameData() {
     }
     if (typeof DARE_CHALLENGES !== 'undefined' && DARE_CHALLENGES.length > 0) {
         console.log('📊 Sample dare challenge:', DARE_CHALLENGES[0]);
-    }
-}
-
-// Force load first questions
-function forceLoadFirstQuestions() {
-    console.log('🚀 Force loading first questions...');
-    
-    if (typeof TRUTH_QUESTIONS !== 'undefined' && TRUTH_QUESTIONS.length > 0) {
-        console.log('✅ Loading first truth question...');
-        loadRandomTruth();
-    } else {
-        console.error('❌ TRUTH_QUESTIONS not ready for force load');
-    }
-    
-    if (typeof DARE_CHALLENGES !== 'undefined' && DARE_CHALLENGES.length > 0) {
-        console.log('✅ Loading first dare challenge...');
-        loadRandomDare();
-    } else {
-        console.error('❌ DARE_CHALLENGES not ready for force load');
     }
 }
