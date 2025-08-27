@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥💀 TRUTH OR DARE - ABSOLUTE CHAOS MODE 💀🔥</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script>
+        // Ensure Supabase is loaded before our scripts
+        window.addEventListener('load', function() {
+            console.log('Supabase script loaded:', typeof window.supabase);
+        });
+    </script>
+</head>
+<body>
+    <!-- CHAOS OVERLAY - BRAIN ROT MODE! 🔥💀 -->
+    <div id="chaosOverlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998;">
+        <div id="floatingEmojis"></div>
+        <div id="chaosIndicator" style="position: fixed; top: 20px; right: 20px; background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3); padding: 10px; border-radius: 20px; color: white; font-weight: bold; font-size: 14px; animation: rainbowText 2s linear infinite;">🔥 CHAOS LEVEL: MAXIMUM 💀</div>
+    </div>
+
+    <!-- Main Page -->
+    <div id="mainPage" class="page active">
+        <div class="container">
+            <div class="emoji">🎭</div>
+            <h1 class="glitch-text" data-text="🔥💀 TRUTH OR DARE - ABSOLUTE CHAOS MODE 💀🔥">🔥💀 TRUTH OR DARE - ABSOLUTE CHAOS MODE 💀🔥</h1>
+            <p class="subtitle">Choose your adventure and let the ABSOLUTE CHAOS begin! 🔥💀</p>
+            
+            <div class="button-container">
+                <button class="game-btn truth" onclick="showTruthPage()">
+                    💀 Truth Zone 💀
+                </button>
+                <button class="game-btn dare" onclick="showDarePage()">
+                    🔥 Dare Chaos 🔥
+                </button>
+            </div>
+            
+            <!-- CHAOS WARNING -->
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,0,0,0.2); border-radius: 15px; border: 2px solid #ff0000; animation: warningBlink 1s ease-in-out infinite;">
+                <strong style="color: #ff0000;">⚠️ WARNING: This game contains MAXIMUM CHAOS and BRAIN ROT! ⚠️</strong><br>
+                <span style="color: #ff6b6b;">Proceed at your own risk! 💀🤡👻</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Truth Page -->
+    <div id="truthPage" class="page">
+        <div class="container">
+            <button class="back-btn" onclick="showMainPage()">← Back to Chaos</button>
+            
+            <div class="emoji">🤔</div>
+            <h1 style="color: #ffd700; animation: rainbowText 2s linear infinite;">💀 Truth Zone - Maximum Honesty! 💀</h1>
+            <p class="subtitle">Answer honestly and watch the chaos unfold... 🔥</p>
+            
+            <div class="challenge-card" id="truthQuestion" style="background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,140,0,0.2)); border: 2px solid #ffd700;">
+                <div class="challenge-text" id="truthText" style="color: #ffd700; font-size: 1.6rem;">
+                    Loading truth question...
+                </div>
+                <div class="truth-input-container">
+                    <textarea id="truthAnswer" placeholder="Type your honest answer here... (Maximum chaos required!) 💀" rows="4" class="truth-input"></textarea>
+                </div>
+                <div class="button-container" style="gap: 1rem; margin-top: 2rem;">
+                    <button class="game-btn" onclick="submitTruth()" style="padding: 1rem 2rem; font-size: 1rem; background: linear-gradient(45deg, #28a745, #20c997);">
+                        💀 Submit Truth! 💀
+                    </button>
+                    <button class="game-btn" onclick="skipTruth()" style="padding: 1rem 2rem; font-size: 1rem; background: linear-gradient(45deg, #dc3545, #fd7e14);">
+                        🚫 Skip This 🚫
+                    </button>
+                </div>
+            </div>
+
+            <div class="challenge-card" id="truthResult" style="display: none; background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,140,0,0.2)); border: 2px solid #ffd700;">
+                <div class="challenge-text" id="resultText" style="color: #ffd700;">
+                </div>
+                <div id="clubPromotion" style="display: none;">
+                    <a href="https://www.instagram.com/rotaract.bit/" target="_blank" class="instagram-link" style="background: linear-gradient(45deg, #ffd700, #ffb347); color: #333;">
+                        🎭 Follow Rotaract BIT - Join the Chaos! 🎭
+                    </a>
+                </div>
+                <br><br>
+                <button class="back-btn" onclick="resetTruth()" style="margin: 0; border-color: #ffd700; color: #ffd700;">
+                    💀 Ask Again 💀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dare Page -->
+    <div id="darePage" class="page">
+        <div class="container">
+            <button class="back-btn" onclick="showMainPage()">← Back to Chaos</button>
+            
+            <div class="emoji">⚡</div>
+            <h1 style="color: #ff4757; animation: rainbowText 2s linear infinite;">🔥 Dare Challenge - Maximum Chaos! 🔥</h1>
+            <p class="subtitle">No backing down from this one! Pure chaos awaits! 💀</p>
+            
+            <div class="challenge-card" id="dareChallenge" style="background: linear-gradient(135deg, rgba(255,71,87,0.2), rgba(255,20,147,0.2)); border: 2px solid #ff4757;">
+                <div class="challenge-text" id="dareText" style="color: #ff4757; font-size: 1.6rem;">
+                    Loading dare challenge...
+                </div>
+                <div class="button-container" style="gap: 1rem; margin-top: 2rem;">
+                    <button class="game-btn" onclick="acceptDare()" style="padding: 1rem 2rem; font-size: 1rem; background: linear-gradient(45deg, #ff4757, #ff3838);">
+                        🔥 Accept Chaos! 🔥
+                    </button>
+                    <button class="game-btn" onclick="skipDare()" style="padding: 1rem 2rem; font-size: 1rem; background: linear-gradient(45deg, #6c757d, #495057);">
+                        😰 Skip This 😰
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dare Submission Form -->
+            <div class="challenge-card" id="dareSubmission" style="display: none; background: linear-gradient(135deg, rgba(255,71,87,0.2), rgba(255,20,147,0.2)); border: 2px solid #ff4757;">
+                <div class="challenge-text" style="color: #ff4757; font-size: 1.4rem;">
+                    📸 Submit your dare completion! Maximum chaos required! 🔥
+                </div>
+                <form id="dareForm" enctype="multipart/form-data">
+                    <div class="file-upload-container">
+                        <input type="file" id="dareImage" name="dareImage" accept="image/*" required style="display: none;">
+                        <label for="dareImage" class="file-upload-label">
+                            📷 Choose Image - Chaos Required! 📷
+                        </label>
+                        <div id="imagePreview" class="image-preview" style="display: none;">
+                            <img id="previewImg" src="" alt="Preview">
+                        </div>
+                    </div>
+                    <!-- Description field removed since we're not storing it in database -->
+                    <div class="button-container" style="gap: 1rem; margin-top: 2rem;">
+                        <button type="submit" class="game-btn" style="padding: 1rem 2rem; font-size: 1rem; background: linear-gradient(45deg, #28a745, #20c997);">
+                            🔥 Submit Chaos! 🔥
+                        </button>
+                        <button type="button" class="back-btn" onclick="cancelDareSubmission()" style="margin: 0;">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="challenge-card" id="dareResult" style="display: none; background: linear-gradient(135deg, rgba(255,71,87,0.2), rgba(255,20,147,0.2)); border: 2px solid #ff4757;">
+                <div class="challenge-text" id="dareResultText" style="color: #ff4757;">
+                </div>
+                <div id="dareClubPromotion" style="display: none;">
+                    <a href="https://www.instagram.com/rotaract.bit/" target="_blank" class="instagram-link" style="background: linear-gradient(45deg, #ff4757, #ff3838); animation: pulse 2s infinite;">
+                        🎭 Follow Rotaract BIT - Join the Chaos! 🎭
+                    </a>
+                </div>
+                <br><br>
+                <button class="back-btn" onclick="resetDare()" style="margin: 0; border-color: #ff4757; color: #ff4757;">
+                    🔥 New Chaos! 🔥
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHAOS FOOTER -->
+    <div style="position: fixed; bottom: 0; left: 0; width: 100%; background: linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #9400d3); color: white; text-align: center; padding: 10px; font-weight: bold; animation: rainbowText 3s linear infinite; z-index: 9999;">
+        🔥💀 ABSOLUTE CHAOS MODE - BRAIN ROT ACTIVATED! 💀🔥
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- CHAOS INITIALIZATION SCRIPT -->
+    <script>
+        // Initialize floating emojis
+        function createFloatingEmojis() {
+            const emojis = ['💀', '🤡', '👻', '🤪', '😵‍💫', '🧠', '💥', '🔥', '⚡', '🎭', '🎪', '🎨'];
+            const container = document.getElementById('floatingEmojis');
+            
+            setInterval(() => {
+                if (Math.random() > 0.8) {
+                    const emoji = document.createElement('div');
+                    emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                    emoji.style.position = 'fixed';
+                    emoji.style.left = Math.random() * 100 + 'vw';
+                    emoji.style.top = '100vh';
+                    emoji.style.fontSize = '20px';
+                    emoji.style.pointerEvents = 'none';
+                    emoji.style.zIndex = '9997';
+                    emoji.style.animation = 'floatUp 4s linear forwards';
+                    
+                    container.appendChild(emoji);
+                    
+                    setTimeout(() => emoji.remove(), 4000);
+                }
+            }, 2000);
+        }
+        
+        // Add floating animation CSS
+        const floatStyle = document.createElement('style');
+        floatStyle.textContent = `
+            @keyframes floatUp {
+                to {
+                    transform: translateY(-100vh) rotate(360deg);
+                }
+            }
+            
+            @keyframes warningBlink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.5; }
+            }
+        `;
+        document.head.appendChild(floatStyle);
+        
+        // Start chaos when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingEmojis();
+            
+            // Random chaos effects
+            setInterval(() => {
+                if (Math.random() > 0.9) {
+                    document.body.style.animation = 'shake 0.3s ease-in-out';
+                    setTimeout(() => {
+                        document.body.style.animation = '';
+                    }, 300);
+                }
+            }, 8000);
+        });
+    </script>
+</body>
+</html>

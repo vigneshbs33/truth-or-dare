@@ -1,0 +1,38 @@
+{
+  "name": "truth-or-dare-chaos",
+  "version": "1.0.0",
+  "description": "🔥💀 Truth or Dare game with maximum chaos and brain rot! 💀🔥",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "serve": "python -m http.server 8000",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "truth-or-dare",
+    "game",
+    "chaos",
+    "brain-rot",
+    "supabase",
+    "vercel",
+    "html5",
+    "css3",
+    "javascript"
+  ],
+  "author": "Vignesh",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/not-vignesh-right/truth-or-dare.git"
+  },
+  "homepage": "https://github.com/not-vignesh-right/truth-or-dare#readme",
+  "bugs": {
+    "url": "https://github.com/not-vignesh-right/truth-or-dare/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
