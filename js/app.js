@@ -132,29 +132,46 @@ function showDarePage() {
 
 // Truth functions
 function loadRandomTruth() {
-    console.log('Loading random truth...');
-    console.log('TRUTH_QUESTIONS length:', TRUTH_QUESTIONS.length);
+    console.log('🔥💀 Loading random truth...');
+    console.log('📊 TRUTH_QUESTIONS length:', TRUTH_QUESTIONS ? TRUTH_QUESTIONS.length : 'UNDEFINED');
+    console.log('📊 TRUTH_QUESTIONS type:', typeof TRUTH_QUESTIONS);
+    console.log('📊 TRUTH_QUESTIONS content:', TRUTH_QUESTIONS);
+    
+    if (!TRUTH_QUESTIONS || TRUTH_QUESTIONS.length === 0) {
+        console.error('❌ TRUTH_QUESTIONS is empty or undefined!');
+        return;
+    }
     
     currentTruthIndex = Math.floor(Math.random() * TRUTH_QUESTIONS.length);
     currentTruth = TRUTH_QUESTIONS[currentTruthIndex];
     
-    console.log('Selected truth:', currentTruth);
+    console.log('🎯 Selected truth index:', currentTruthIndex);
+    console.log('🎯 Selected truth:', currentTruth);
     
     const truthText = document.getElementById('truthText');
+    console.log('🔍 truthText element found:', !!truthText);
+    
     if (truthText) {
         // Add random emojis to make it more chaotic
         const randomEmojis = ['💀', '🤡', '👻', '🤪', '😵‍💫', '🧠', '💥', '🔥', '⚡', '🎭'];
         const randomEmoji = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
-        truthText.innerHTML = `<strong>${randomEmoji} ${currentTruth} ${randomEmoji}</strong>`;
-        console.log('Truth text updated');
+        const newText = `<strong>${randomEmoji} ${currentTruth} ${randomEmoji}</strong>`;
+        
+        console.log('📝 Setting truth text to:', newText);
+        truthText.innerHTML = newText;
+        console.log('✅ Truth text updated successfully');
+        
+        // Verify the update
+        console.log('🔍 Current truthText.innerHTML:', truthText.innerHTML);
     } else {
-        console.error('truthText element not found!');
+        console.error('❌ truthText element not found!');
     }
     
     // Clear previous answer
     const truthAnswer = document.getElementById('truthAnswer');
     if (truthAnswer) {
         truthAnswer.value = '';
+        console.log('🧹 Cleared previous truth answer');
     }
 }
 
@@ -214,24 +231,40 @@ function resetTruth() {
 
 // Dare functions
 function loadRandomDare() {
-    console.log('Loading random dare...');
-    console.log('DARE_CHALLENGES length:', DARE_CHALLENGES.length);
+    console.log('🔥💀 Loading random dare...');
+    console.log('📊 DARE_CHALLENGES length:', DARE_CHALLENGES ? DARE_CHALLENGES.length : 'UNDEFINED');
+    console.log('📊 DARE_CHALLENGES type:', typeof DARE_CHALLENGES);
+    console.log('📊 DARE_CHALLENGES content:', DARE_CHALLENGES);
+    
+    if (!DARE_CHALLENGES || DARE_CHALLENGES.length === 0) {
+        console.error('❌ DARE_CHALLENGES is empty or undefined!');
+        return;
+    }
     
     currentDareIndex = Math.floor(Math.random() * DARE_CHALLENGES.length);
     currentDare = DARE_CHALLENGES[currentDareIndex];
     
-    console.log('Selected dare:', currentDare);
+    console.log('🎯 Selected dare index:', currentDareIndex);
+    console.log('🎯 Selected dare:', currentDare);
     
     const dareText = document.getElementById('dareText');
+    console.log('🔍 dareText element found:', !!dareText);
+    
     if (dareText) {
         // Add random emojis and make it more chaotic
         const randomEmojis = ['🔥', '⚡', '💀', '🤡', '👻', '🤪', '😵‍💫', '🧠', '💥', '🎭'];
         const randomEmoji1 = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
         const randomEmoji2 = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
-        dareText.innerHTML = `<strong>${randomEmoji1} ULTIMATE DARE: ${randomEmoji2}</strong><br><br>${currentDare}<br><span style="font-size: 1rem; opacity: 0.8;">No excuses, no delays! Maximum chaos! ${randomEmoji1}</span>`;
-        console.log('Dare text updated');
+        const newText = `<strong>${randomEmoji1} ULTIMATE DARE: ${randomEmoji2}</strong><br><br>${currentDare}<br><span style="font-size: 1rem; opacity: 0.8;">No excuses, no delays! Maximum chaos! ${randomEmoji1}</span>`;
+        
+        console.log('📝 Setting dare text to:', newText);
+        dareText.innerHTML = newText;
+        console.log('✅ Dare text updated successfully');
+        
+        // Verify the update
+        console.log('🔍 Current dareText.innerHTML:', dareText.innerHTML);
     } else {
-        console.error('dareText element not found!');
+        console.error('❌ dareText element not found!');
     }
 }
 
@@ -577,3 +610,47 @@ handleDareSubmission = async function(event) {
     await originalHandleDareSubmission(event);
     addConfetti();
 };
+
+// DEBUG FUNCTIONS - Remove after fixing
+function testLoadRandomTruth() {
+    console.log('🧪 Testing loadRandomTruth function...');
+    console.log('📊 TRUTH_QUESTIONS available:', typeof TRUTH_QUESTIONS !== 'undefined' ? TRUTH_QUESTIONS.length : 'UNDEFINED');
+    console.log('📊 TRUTH_QUESTIONS content:', TRUTH_QUESTIONS);
+    
+    if (typeof loadRandomTruth === 'function') {
+        console.log('✅ loadRandomTruth function exists, calling it...');
+        loadRandomTruth();
+    } else {
+        console.error('❌ loadRandomTruth function not found!');
+    }
+}
+
+function testLoadRandomDare() {
+    console.log('🧪 Testing loadRandomDare function...');
+    console.log('📊 DARE_CHALLENGES available:', typeof DARE_CHALLENGES !== 'undefined' ? DARE_CHALLENGES.length : 'UNDEFINED');
+    console.log('📊 DARE_CHALLENGES content:', DARE_CHALLENGES);
+    
+    if (typeof loadRandomDare === 'function') {
+        console.log('✅ loadRandomDare function exists, calling it...');
+        loadRandomDare();
+    } else {
+        console.error('❌ loadRandomDare function not found!');
+    }
+}
+
+function checkGameData() {
+    console.log('📊 GAME DATA STATUS:');
+    console.log('📊 TRUTH_QUESTIONS:', typeof TRUTH_QUESTIONS !== 'undefined' ? `✅ Loaded (${TRUTH_QUESTIONS.length} questions)` : '❌ Not loaded');
+    console.log('📊 DARE_CHALLENGES:', typeof DARE_CHALLENGES !== 'undefined' ? `✅ Loaded (${DARE_CHALLENGES.length} dares)` : '❌ Not loaded');
+    console.log('📊 loadRandomTruth function:', typeof loadRandomTruth === 'function' ? '✅ Exists' : '❌ Missing');
+    console.log('📊 loadRandomDare function:', typeof loadRandomDare === 'function' ? '✅ Exists' : '❌ Missing');
+    console.log('📊 truthText element:', document.getElementById('truthText') ? '✅ Found' : '❌ Not found');
+    console.log('📊 dareText element:', document.getElementById('dareText') ? '✅ Found' : '❌ Not found');
+    
+    if (typeof TRUTH_QUESTIONS !== 'undefined' && TRUTH_QUESTIONS.length > 0) {
+        console.log('📊 Sample truth question:', TRUTH_QUESTIONS[0]);
+    }
+    if (typeof DARE_CHALLENGES !== 'undefined' && DARE_CHALLENGES.length > 0) {
+        console.log('📊 Sample dare challenge:', DARE_CHALLENGES[0]);
+    }
+}
