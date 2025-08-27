@@ -1,50 +1,18 @@
-{
   "version": 2,
-  "public": true,
-  "outputDirectory": ".",
-  "rewrites": [
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/index.html"
+      "src": "index.html",
+      "use": "@vercel/static"
     }
   ],
-  "headers": [
+  "routes": [
     {
-      "source": "/styles/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
-        { "key": "Content-Type", "value": "text/css" }
-      ]
-    },
-    {
-      "source": "/js/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" },
-        { "key": "Content-Type", "value": "application/javascript" }
-      ]
-    },
-    {
-      "source": "/database/(.*)",
-      "headers": [
-        { "key": "Content-Type", "value": "text/plain" }
-      ]
-    },
-    {
-      "source": "/(.*\\.(png|jpg|jpeg|gif|svg|ico|webp|woff|woff2|ttf|eot|json|xml|txt|md))",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "X-XSS-Protection", "value": "1; mode=block" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-      ]
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ],
   "env": {
-     }
+    "SUPABASE_URL": "https://aoyepcazkooyvnxdzczg.supabase.co",
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFveWVwY2F6a29veXZueGR6Y3pnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzMTQxMDAsImV4cCI6MjA3MTg5MDEwMH0.YZWIHovP5tClutBZInXmpVbF6Acglpx3bdOJK7J1yyM"
+  }
 }
