@@ -9,15 +9,19 @@ let supabase;
 function initializeSupabase() {
     if (window.supabase) {
         supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('Supabase initialized successfully!');
+        console.log('🎉 Supabase initialized successfully!');
     } else {
-        console.log('Supabase not ready yet, retrying...');
+        console.log('⏳ Supabase not ready yet, retrying...');
         setTimeout(initializeSupabase, 100);
     }
 }
 
 // Start initialization
 initializeSupabase();
+
+console.log('🔥💀 Config.js loaded successfully!');
+console.log('📊 TRUTH_QUESTIONS count:', TRUTH_QUESTIONS ? TRUTH_QUESTIONS.length : 'UNDEFINED');
+console.log('📊 DARE_CHALLENGES count:', DARE_CHALLENGES ? DARE_CHALLENGES.length : 'UNDEFINED');
 
 // ABSOLUTELY BRAIN-ROTTING TRUTH QUESTIONS 💀
 const TRUTH_QUESTIONS = [
@@ -145,3 +149,7 @@ const CLUB_LINKS = {
     truth: "https://www.instagram.com/rotaract.bit/",
     dare: "https://www.instagram.com/rotaract.bit/"
 };
+
+console.log('🎯 Config.js initialization complete!');
+console.log('📊 Final TRUTH_QUESTIONS count:', TRUTH_QUESTIONS.length);
+console.log('📊 Final DARE_CHALLENGES count:', DARE_CHALLENGES.length);

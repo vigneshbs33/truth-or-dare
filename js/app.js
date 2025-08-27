@@ -7,10 +7,13 @@ let chaosLevel = 0; // Track how chaotic the game gets
 
 // Initialize the game
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM loaded, initializing game...');
+    console.log('🔥💀 DOM loaded, initializing Truth or Dare game...');
+    console.log('🌐 Current URL:', window.location.href);
+    console.log('📁 Script path:', document.currentScript?.src || 'inline script');
     
     // Wait a bit for scripts to load
     setTimeout(function() {
+        console.log('⏰ Timeout completed, checking game data...');
         console.log('TRUTH_QUESTIONS available:', typeof TRUTH_QUESTIONS !== 'undefined' ? TRUTH_QUESTIONS.length : 'UNDEFINED');
         console.log('DARE_CHALLENGES available:', typeof DARE_CHALLENGES !== 'undefined' ? DARE_CHALLENGES.length : 'UNDEFINED');
         
@@ -20,26 +23,26 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('truthAnswer element exists:', !!document.getElementById('truthAnswer'));
         
         if (typeof TRUTH_QUESTIONS !== 'undefined' && typeof DARE_CHALLENGES !== 'undefined') {
-            console.log('Game data loaded successfully!');
+            console.log('🎉 Game data loaded successfully!');
             loadRandomTruth();
             loadRandomDare();
             setupEventListeners();
             startChaosMode(); // Start the chaos immediately!
-            console.log('Game initialization complete!');
+            console.log('🚀 Game initialization complete!');
             
             // Update loading text to show it's working
             const truthText = document.getElementById('truthText');
             const dareText = document.getElementById('dareText');
             if (truthText && truthText.innerHTML.includes('Loading')) {
-                console.log('Updating truth loading text...');
+                console.log('✅ Updating truth loading text...');
             }
             if (dareText && dareText.innerHTML.includes('Loading')) {
-                console.log('Updating dare loading text...');
+                console.log('✅ Updating dare loading text...');
             }
         } else {
-            console.error('Game data not loaded! Check script loading order.');
+            console.error('❌ Game data not loaded! Check script loading order.');
             console.log('TRUTH_QUESTIONS:', TRUTH_QUESTIONS);
-            console.log('DARE_CHALLENGES:', DARE_CHALLENGES);
+            console.log('DARE_CHALLENGES', DARE_CHALLENGES);
             
             // Show error message to user
             const mainPage = document.getElementById('mainPage');
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 `;
             }
         }
-    }, 500);
+    }, 1000); // Increased timeout to 1 second
 });
 
 // Setup event listeners
