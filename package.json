@@ -1,38 +1,42 @@
 {
   "name": "truth-or-dare-chaos",
-  "version": "1.0.0",
-  "description": "🔥💀 Truth or Dare game with maximum chaos and brain rot! 💀🔥",
+  "version": "2.0.0",
+  "description": "🔥💀 Truth or Dare - Absolute Chaos Mode - A chaotic and fun web game with maximum brain rot and entertainment!",
   "main": "index.html",
   "scripts": {
     "start": "python -m http.server 8000",
     "dev": "python -m http.server 8000",
-    "serve": "python -m http.server 8000",
-    "deploy": "vercel --prod"
+    "serve": "python -m http.server 8000"
   },
   "keywords": [
     "truth-or-dare",
     "game",
     "chaos",
-    "brain-rot",
+    "entertainment",
+    "mobile-friendly",
     "supabase",
-    "vercel",
+    "javascript",
     "html5",
-    "css3",
-    "javascript"
+    "css3"
   ],
-  "author": "Vignesh",
+  "author": "Vignesh BS",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/not-vignesh-right/truth-or-dare.git"
+    "url": "https://github.com/vigneshbs33/truth-or-dare.git"
   },
-  "homepage": "https://github.com/not-vignesh-right/truth-or-dare#readme",
   "bugs": {
-    "url": "https://github.com/not-vignesh-right/truth-or-dare/issues"
+    "url": "https://github.com/vigneshbs33/truth-or-dare/issues"
   },
+  "homepage": "https://github.com/vigneshbs33/truth-or-dare#readme",
   "engines": {
     "node": ">=14.0.0"
   },
   "devDependencies": {},
-  "dependencies": {}
+  "dependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

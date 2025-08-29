@@ -9,56 +9,110 @@ let chaosLevel = 0; // Track how chaotic the game gets
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🔥💀 DOM loaded, initializing Truth or Dare game...');
     console.log('🌐 Current URL:', window.location.href);
-    console.log('📁 Script path:', document.currentScript?.src || 'inline script');
     
-    // Wait a bit for scripts to load
+    // Initialize game immediately and also after a delay to ensure scripts are loaded
+    initializeGame();
+    
+    // Also try again after a delay to handle any loading issues
     setTimeout(function() {
-        console.log('⏰ Timeout completed, checking game data...');
-        console.log('TRUTH_QUESTIONS available:', typeof TRUTH_QUESTIONS !== 'undefined' ? TRUTH_QUESTIONS.length : 'UNDEFINED');
-        console.log('DARE_CHALLENGES available:', typeof DARE_CHALLENGES !== 'undefined' ? DARE_CHALLENGES.length : 'UNDEFINED');
-        
-        // Test if HTML elements exist
-        console.log('truthText element exists:', !!document.getElementById('truthText'));
-        console.log('dareText element exists:', !!document.getElementById('dareText'));
-        console.log('truthAnswer element exists:', !!document.getElementById('truthAnswer'));
-        
+        console.log('⏰ Delayed initialization check...');
+        if (!currentTruth || !currentDare) {
+            console.log('🔄 Re-initializing game due to missing data...');
+            initializeGame();
+        }
+    }, 2000);
+    
+    // Force load questions after 3 seconds if still not loaded
+    setTimeout(function() {
+        console.log('🔄 Force loading questions...');
         if (typeof TRUTH_QUESTIONS !== 'undefined' && typeof DARE_CHALLENGES !== 'undefined') {
-            console.log('🎉 Game data loaded successfully!');
             loadRandomTruth();
             loadRandomDare();
-            setupEventListeners();
-            startChaosMode(); // Start the chaos immediately!
-            console.log('🚀 Game initialization complete!');
-            
-            // Update loading text to show it's working
-            const truthText = document.getElementById('truthText');
-            const dareText = document.getElementById('dareText');
-            if (truthText && truthText.innerHTML.includes('Loading')) {
-                console.log('✅ Updating truth loading text...');
-            }
-            if (dareText && dareText.innerHTML.includes('Loading')) {
-                console.log('✅ Updating dare loading text...');
-            }
-        } else {
-            console.error('❌ Game data not loaded! Check script loading order.');
-            console.log('TRUTH_QUESTIONS:', TRUTH_QUESTIONS);
-            console.log('DARE_CHALLENGES', DARE_CHALLENGES);
-            
-            // Show error message to user
-            const mainPage = document.getElementById('mainPage');
-            if (mainPage) {
-                mainPage.innerHTML = `
-                    <div class="container">
-                        <div class="emoji">💀</div>
-                        <h1>🔥 CHAOS ERROR! 🔥</h1>
-                        <p class="subtitle">Game data failed to load! Check console for details.</p>
-                        <button onclick="location.reload()" class="game-btn">🔄 Reload Chaos</button>
-                    </div>
-                `;
-            }
         }
-    }, 1000); // Increased timeout to 1 second
+    }, 3000);
 });
+
+// Also try to load when window is fully loaded
+window.addEventListener('load', function() {
+    console.log('🌐 Window fully loaded, checking game data...');
+    
+    // Force load questions if they haven't loaded yet
+    setTimeout(function() {
+        const truthText = document.getElementById('truthText');
+        const dareText = document.getElementById('dareText');
+        
+        if (truthText && truthText.innerHTML.includes('Loading')) {
+            console.log('🔄 Force loading truth question...');
+            loadRandomTruth();
+        }
+        
+        if (dareText && dareText.innerHTML.includes('Loading')) {
+            console.log('🔄 Force loading dare question...');
+            loadRandomDare();
+        }
+    }, 1000);
+});
+
+// Main initialization function
+function initializeGame() {
+    console.log('🎮 Starting game initialization...');
+    console.log('TRUTH_QUESTIONS available:', typeof TRUTH_QUESTIONS !== 'undefined' ? TRUTH_QUESTIONS.length : 'UNDEFINED');
+    console.log('DARE_CHALLENGES available:', typeof DARE_CHALLENGES !== 'undefined' ? DARE_CHALLENGES.length : 'UNDEFINED');
+    
+    // Test if HTML elements exist
+    console.log('truthText element exists:', !!document.getElementById('truthText'));
+    console.log('dareText element exists:', !!document.getElementById('dareText'));
+    console.log('truthAnswer element exists:', !!document.getElementById('truthAnswer'));
+    
+    if (typeof TRUTH_QUESTIONS !== 'undefined' && typeof DARE_CHALLENGES !== 'undefined' && 
+        TRUTH_QUESTIONS.length > 0 && DARE_CHALLENGES.length > 0) {
+        console.log('🎉 Game data loaded successfully!');
+        
+        // Load initial questions
+        loadRandomTruth();
+        loadRandomDare();
+        setupEventListeners();
+        startChaosMode(); // Start the chaos immediately!
+        console.log('🚀 Game initialization complete!');
+        
+        // Update loading text to show it's working
+        const truthText = document.getElementById('truthText');
+        const dareText = document.getElementById('dareText');
+        if (truthText && truthText.innerHTML.includes('Loading')) {
+            console.log('✅ Updating truth loading text...');
+            loadRandomTruth(); // Force update
+        }
+        if (dareText && dareText.innerHTML.includes('Loading')) {
+            console.log('✅ Updating dare loading text...');
+            loadRandomDare(); // Force update
+        }
+    } else {
+        console.error('❌ Game data not loaded! Check script loading order.');
+        console.log('TRUTH_QUESTIONS:', TRUTH_QUESTIONS);
+        console.log('DARE_CHALLENGES', DARE_CHALLENGES);
+        
+        // Show error message to user
+        const mainPage = document.getElementById('mainPage');
+        if (mainPage) {
+            mainPage.innerHTML = `
+                <div class="container">
+                    <div class="emoji">💀</div>
+                    <h1>�� CHAOS ERROR! 🔥</h1>
+                    <p class="subtitle">Game data failed to load! Check console for details.</p>
+                    <button onclick="location.reload()" class="game-btn">🔄 Reload Chaos</button>
+                </div>
+            `;
+        }
+        
+        // Try to load again after a short delay
+        setTimeout(function() {
+            if (typeof TRUTH_QUESTIONS !== 'undefined' && typeof DARE_CHALLENGES !== 'undefined') {
+                console.log('🔄 Retrying initialization...');
+                initializeGame();
+            }
+        }, 1000);
+    }
+}
 
 // Setup event listeners
 function setupEventListeners() {
@@ -133,6 +187,18 @@ function showDarePage() {
 // Truth functions
 function loadRandomTruth() {
     console.log('Loading random truth...');
+    
+    if (typeof TRUTH_QUESTIONS === 'undefined' || !TRUTH_QUESTIONS || TRUTH_QUESTIONS.length === 0) {
+        console.error('TRUTH_QUESTIONS not available!');
+        // Set a fallback question
+        const fallbackQuestion = "What's the most embarrassing thing you've ever done?";
+        const truthText = document.getElementById('truthText');
+        if (truthText) {
+            truthText.innerHTML = `<strong>💀 ${fallbackQuestion} 💀</strong>`;
+        }
+        return;
+    }
+    
     console.log('TRUTH_QUESTIONS length:', TRUTH_QUESTIONS.length);
     
     currentTruthIndex = Math.floor(Math.random() * TRUTH_QUESTIONS.length);
@@ -146,7 +212,7 @@ function loadRandomTruth() {
         const randomEmojis = ['💀', '🤡', '👻', '🤪', '😵‍💫', '🧠', '💥', '🔥', '⚡', '🎭'];
         const randomEmoji = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
         truthText.innerHTML = `<strong>${randomEmoji} ${currentTruth} ${randomEmoji}</strong>`;
-        console.log('Truth text updated');
+        console.log('Truth text updated successfully');
     } else {
         console.error('truthText element not found!');
     }
@@ -215,6 +281,18 @@ function resetTruth() {
 // Dare functions
 function loadRandomDare() {
     console.log('Loading random dare...');
+    
+    if (typeof DARE_CHALLENGES === 'undefined' || !DARE_CHALLENGES || DARE_CHALLENGES.length === 0) {
+        console.error('DARE_CHALLENGES not available!');
+        // Set a fallback dare
+        const fallbackDare = "Take a selfie with your most embarrassing face!";
+        const dareText = document.getElementById('dareText');
+        if (dareText) {
+            dareText.innerHTML = `<strong>🔥 ULTIMATE DARE: ⚡</strong><br><br>${fallbackDare}<br><span style="font-size: 1rem; opacity: 0.8;">No excuses, no delays! Maximum chaos! 🔥</span>`;
+        }
+        return;
+    }
+    
     console.log('DARE_CHALLENGES length:', DARE_CHALLENGES.length);
     
     currentDareIndex = Math.floor(Math.random() * DARE_CHALLENGES.length);
@@ -229,7 +307,7 @@ function loadRandomDare() {
         const randomEmoji1 = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
         const randomEmoji2 = randomEmojis[Math.floor(Math.random() * randomEmojis.length)];
         dareText.innerHTML = `<strong>${randomEmoji1} ULTIMATE DARE: ${randomEmoji2}</strong><br><br>${currentDare}<br><span style="font-size: 1rem; opacity: 0.8;">No excuses, no delays! Maximum chaos! ${randomEmoji1}</span>`;
-        console.log('Dare text updated');
+        console.log('Dare text updated successfully');
     } else {
         console.error('dareText element not found!');
     }

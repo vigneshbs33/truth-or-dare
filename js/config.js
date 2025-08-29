@@ -19,10 +19,6 @@ function initializeSupabase() {
 // Start initialization
 initializeSupabase();
 
-console.log('🔥💀 Config.js loaded successfully!');
-console.log('📊 TRUTH_QUESTIONS count:', TRUTH_QUESTIONS ? TRUTH_QUESTIONS.length : 'UNDEFINED');
-console.log('📊 DARE_CHALLENGES count:', DARE_CHALLENGES ? DARE_CHALLENGES.length : 'UNDEFINED');
-
 // ABSOLUTELY BRAIN-ROTTING TRUTH QUESTIONS 💀
 const TRUTH_QUESTIONS = [
     "What's the most embarrassing thing you've ever done while sleepwalking?",
@@ -141,7 +137,8 @@ const DARE_CHALLENGES = [
     "Take a photo of yourself looking as powerful as possible",
     "Go to a stranger and ask them what their favorite music is",
     "Dance like you're in a dance battle while recording yourself",
-    "Call your friend and tell them you're becoming a professional singer"
+    "Call your friend and tell them you're becoming a professional singer",
+    "🌟 CONTRIBUTE TO THE PROJECT: Go to https://github.com/vigneshbs33/truth-or-dare and star the repository, then take a screenshot and share it! 🌟"
 ];
 
 // Club promotion links
@@ -150,6 +147,10 @@ const CLUB_LINKS = {
     dare: "https://www.instagram.com/rotaract.bit/"
 };
 
+// Now log the data after it's defined
+console.log('🔥💀 Config.js loaded successfully!');
+console.log('📊 TRUTH_QUESTIONS count:', TRUTH_QUESTIONS ? TRUTH_QUESTIONS.length : 'UNDEFINED');
+console.log('📊 DARE_CHALLENGES count:', DARE_CHALLENGES ? DARE_CHALLENGES.length : 'UNDEFINED');
 console.log('🎯 Config.js initialization complete!');
 console.log('📊 Final TRUTH_QUESTIONS count:', TRUTH_QUESTIONS.length);
 console.log('📊 Final DARE_CHALLENGES count:', DARE_CHALLENGES.length);

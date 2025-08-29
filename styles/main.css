@@ -4,6 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 body {
@@ -15,6 +16,9 @@ body {
     justify-content: center;
     color: white;
     overflow-x: hidden; /* Prevent horizontal scroll from chaos */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    touch-action: manipulation; /* Optimize touch interactions */
 }
 
 .container {
@@ -92,6 +96,11 @@ h1 {
     letter-spacing: 1px;
     position: relative;
     overflow: hidden;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 .game-btn::before {
@@ -113,6 +122,11 @@ h1 {
     transform: translateY(-3px) scale(1.05);
     box-shadow: 0 12px 25px rgba(0,0,0,0.3);
     animation: glitch 0.3s ease-in-out;
+}
+
+.game-btn:active {
+    transform: translateY(-1px) scale(1.02);
+    transition: transform 0.1s ease;
 }
 
 @keyframes glitch {
@@ -156,6 +170,11 @@ h1 {
     margin-bottom: 2rem;
     position: relative;
     overflow: hidden;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 .back-btn::before {
@@ -177,6 +196,11 @@ h1 {
     background: rgba(255,255,255,0.3);
     transform: translateY(-2px) scale(1.05);
     animation: wiggle 0.5s ease-in-out;
+}
+
+.back-btn:active {
+    transform: translateY(0px) scale(1.02);
+    transition: transform 0.1s ease;
 }
 
 @keyframes wiggle {
@@ -253,6 +277,11 @@ h1 {
     position: relative;
     overflow: hidden;
     animation: instagramPulse 2s ease-in-out infinite;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 @keyframes instagramPulse {
@@ -279,6 +308,11 @@ h1 {
     transform: translateY(-2px) scale(1.1);
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     animation: instagramSpin 0.5s ease-in-out;
+}
+
+.instagram-link:active {
+    transform: translateY(0px) scale(1.05);
+    transition: transform 0.1s ease;
 }
 
 @keyframes instagramSpin {
@@ -347,6 +381,10 @@ h1 {
     margin: 1rem 0;
     transition: all 0.3s ease;
     animation: inputGlow 2s ease-in-out infinite;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    font-family: inherit;
 }
 
 @keyframes inputGlow {
@@ -394,6 +432,11 @@ h1 {
     transition: all 0.3s ease;
     font-weight: bold;
     animation: uploadPulse 2s ease-in-out infinite;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    touch-action: manipulation;
+    user-select: none;
 }
 
 @keyframes uploadPulse {
@@ -405,6 +448,11 @@ h1 {
     transform: translateY(-2px) scale(1.1);
     box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     animation: uploadSpin 0.5s ease-in-out;
+}
+
+.file-upload-label:active {
+    transform: translateY(0px) scale(1.05);
+    transition: transform 0.1s ease;
 }
 
 @keyframes uploadSpin {
@@ -483,24 +531,233 @@ h1 {
     to { transform: rotate(360deg); }
 }
 
-/* Responsive design */
+/* Enhanced Mobile Responsive Design */
 @media (max-width: 768px) {
+    body {
+        padding: 1rem;
+        min-height: 100vh;
+        align-items: flex-start;
+        padding-top: 2rem;
+    }
+    
+    .container {
+        width: 95%;
+        padding: 1rem;
+        margin: 0 auto;
+    }
+    
     h1 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin-bottom: 0.8rem;
+    }
+    
+    .subtitle {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+        line-height: 1.4;
     }
     
     .button-container {
         flex-direction: column;
         align-items: center;
+        gap: 1rem;
     }
     
     .game-btn {
         width: 100%;
-        max-width: 300px;
+        max-width: 280px;
+        padding: 1.2rem 2rem;
+        font-size: 1.2rem;
+        margin: 0.5rem 0;
+        min-height: 60px; /* Ensure minimum touch target size */
+    }
+    
+    .back-btn {
+        width: 100%;
+        max-width: 200px;
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        min-height: 50px; /* Ensure minimum touch target size */
     }
     
     .emoji {
         font-size: 3rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .challenge-card {
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 15px;
+    }
+    
+    .challenge-text {
+        font-size: 1.1rem;
+        line-height: 1.5;
+        margin-bottom: 1.5rem;
+    }
+    
+    .truth-input {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        margin: 0.8rem 0;
+        min-height: 100px; /* Better mobile textarea size */
+    }
+    
+    .file-upload-label {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 250px;
+        min-height: 50px; /* Ensure minimum touch target size */
+    }
+    
+    .instagram-link {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 280px;
+        display: block;
+        margin: 1rem auto;
+        min-height: 50px; /* Ensure minimum touch target size */
+    }
+    
+    .message {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.9rem;
+        margin: 0.8rem 0;
+    }
+    
+    /* Fix chaos indicator overlap on mobile */
+    #chaosIndicator {
+        position: fixed !important;
+        top: 10px !important;
+        right: 10px !important;
+        font-size: 10px !important;
+        padding: 5px 8px !important;
+        border-radius: 15px !important;
+        max-width: 120px !important;
+        text-align: center !important;
+        line-height: 1.2 !important;
+    }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+    body {
+        padding: 0.5rem;
+        padding-top: 1rem;
+    }
+    
+    .container {
+        width: 98%;
+        padding: 0.8rem;
+    }
+    
+    h1 {
+        font-size: 1.5rem;
+        margin-bottom: 0.6rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .game-btn {
+        padding: 1rem 1.5rem;
+        font-size: 1.1rem;
+        max-width: 260px;
+        min-height: 55px;
+    }
+    
+    .back-btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.8rem;
+        max-width: 180px;
+        min-height: 45px;
+    }
+    
+    .emoji {
+        font-size: 2.5rem;
+    }
+    
+    .challenge-card {
+        padding: 1.2rem;
+        margin: 1.2rem 0;
+    }
+    
+    .challenge-text {
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+    
+    .truth-input {
+        padding: 0.7rem;
+        font-size: 0.85rem;
+        min-height: 80px;
+    }
+    
+    .file-upload-label {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+        max-width: 220px;
+        min-height: 45px;
+    }
+    
+    .instagram-link {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.85rem;
+        max-width: 240px;
+        min-height: 45px;
+    }
+    
+    /* Further reduce chaos indicator size on very small screens */
+    #chaosIndicator {
+        font-size: 8px !important;
+        padding: 4px 6px !important;
+        max-width: 100px !important;
+    }
+}
+
+/* Landscape orientation for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    body {
+        padding-top: 0.5rem;
+    }
+    
+    .container {
+        padding: 0.5rem;
+    }
+    
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    
+    .emoji {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .challenge-card {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    /* Adjust chaos indicator for landscape */
+    #chaosIndicator {
+        top: 5px !important;
+        right: 5px !important;
+        font-size: 9px !important;
+        padding: 3px 6px !important;
     }
 }
 
