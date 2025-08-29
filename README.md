@@ -23,7 +23,7 @@ A chaotic and fun Truth or Dare web game with maximum brain rot and entertainmen
 ## 🚀 Quick Start
 
 ### Option 1: Live Demo
-Visit the live version: [Truth or Dare - Absolute Chaos Mode](https://your-deployment-url.com)
+Visit the live version: [Truth or Dare - Absolute Chaos Mode](https://truth-or-dare-bit.vercel.app)
 
 ### Option 2: Local Development
 
