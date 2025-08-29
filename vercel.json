@@ -7,6 +7,11 @@
     { "src": "/js/(.*)", "dest": "/js/$1" },
     { "src": "/database/(.*)", "dest": "/database/$1" },
     { "src": "/(.*\\.css)", "dest": "/$1" },
+
+    // 👇 ensure API routes are NOT redirected to index.html
+    { "src": "/api/(.*)", "dest": "/api/$1" },
+
+    // catch-all fallback for frontend routes
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
