@@ -5,7 +5,9 @@ A chaotic and fun Truth or Dare web game with maximum brain rot and entertainmen
 ![Truth or Dare Game](https://img.shields.io/badge/Game-Truth%20or%20Dare-red)
 ![Version](https://img.shields.io/badge/Version-2.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
-![Mobile](https://img.shields.io/badge/Mobile-Friendly-Yes-brightgreen)
+
+
+[**TRY NOW 🔥**](https://truth-or-dare-bit.vercel.app)
 
 ## 🌟 Features
 
@@ -219,4 +221,4 @@ Thanks to everyone who:
 
 **🔥💀 Remember: This game contains MAXIMUM CHAOS and BRAIN ROT! Proceed at your own risk! 💀🔥**
 
-Made with ❤️ and 💀 by the Truth or Dare team
+Made by Vignesh B S
