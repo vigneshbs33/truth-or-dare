@@ -1,23 +1,101 @@
-// Supabase configuration
-const SUPABASE_URL = 'https://aoyepcazkooyvnxdzczg.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFveWVwY2F6a29veXZueGR6Y3pnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYzMTQxMDAsImV4cCI6MjA3MTg5MDEwMH0.YZWIHovP5tClutBZInXmpVbF6Acglpx3bdOJK7J1yyM';
+// Global supabase client used by app.js
+let supabase = null;
 
-// Initialize Supabase client (will be set after Supabase loads)
-let supabase;
+// Internal storage for the credentials (will be populated)
+let SUPABASE_URL = null;
+let SUPABASE_ANON_KEY = null;
 
-// Function to initialize Supabase when it's available
-function initializeSupabase() {
-    if (window.supabase) {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        console.log('🎉 Supabase initialized successfully!');
-    } else {
-        console.log('⏳ Supabase not ready yet, retrying...');
-        setTimeout(initializeSupabase, 100);
+/**
+ * Try to load env from multiple sources (in priority order):
+ * 1. window.ENV (for local static dev via config.local.js)
+ * 2. process.env (when built by Next/Vite)
+ * 3. fetch('/api/env') — a small serverless endpoint you can add on Vercel
+ */
+async function loadEnv() {
+  // 1) window.ENV (local static config)
+  if (typeof window !== 'undefined' && window.ENV && window.ENV.SUPABASE_URL && window.ENV.SUPABASE_ANON_KEY) {
+    console.log('config.js: using window.ENV for supabase creds');
+    SUPABASE_URL = window.ENV.SUPABASE_URL;
+    SUPABASE_ANON_KEY = window.ENV.SUPABASE_ANON_KEY;
+    return;
+  }
+
+  // 2) process.env (works when using Next/Vite/other bundlers)
+  if (typeof process !== 'undefined' && process && process.env) {
+    // check common prefixes (NEXT_PUBLIC_ or VITE_)
+    SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || null;
+    SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || null;
+
+    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+      console.log('config.js: using process.env for supabase creds');
+      return;
     }
+  }
+
+  // 3) Try to fetch from /api/env (useful for static site on Vercel)
+  try {
+    const resp = await fetch('/api/env', { cache: 'no-store' });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data.SUPABASE_URL && data.SUPABASE_ANON_KEY) {
+        console.log('config.js: loaded supabase creds from /api/env');
+        SUPABASE_URL = data.SUPABASE_URL;
+        SUPABASE_ANON_KEY = data.SUPABASE_ANON_KEY;
+        return;
+      }
+    } else {
+      console.log('config.js: /api/env returned', resp.status);
+    }
+  } catch (e) {
+    // ignore: endpoint may not exist
+    console.log('config.js: /api/env fetch failed (probably not present)', e && e.message ? e.message : e);
+  }
+
+  // No env found
+  console.warn('config.js: No Supabase credentials found. Add window.ENV (local), set env vars for your build (NEXT_PUBLIC_ or VITE_), or create /api/env on your host.');
 }
 
-// Start initialization
+/**
+ * Wait until window.supabase SDK is loaded (if used via CDN)
+ * and the credentials are available, then create client.
+ */
+async function initializeSupabase() {
+  await loadEnv();
+
+  // if credentials are missing, bail out (app will handle gracefully)
+  if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
+    console.warn('config.js: Supabase credentials missing — supabase will not be initialized yet.');
+    return;
+  }
+
+  // Wait for the Supabase JS SDK to be available on window.supabase (if using CDN)
+  const maxWaitMs = 5000;
+  const intervalMs = 100;
+  let waited = 0;
+
+  while (typeof window.supabase === 'undefined' && waited < maxWaitMs) {
+    await new Promise(r => setTimeout(r, intervalMs));
+    waited += intervalMs;
+  }
+
+  if (typeof window.supabase !== 'undefined') {
+    try {
+      supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      console.log('🎉 Supabase initialized successfully (config.js)');
+      // keep a global reference (optional — app.js expects global supabase variable)
+      window._SUPABASE_CLIENT = supabase;
+    } catch (err) {
+      console.error('config.js: error creating supabase client', err);
+    }
+  } else {
+    // If SDK not present, warn — but app may load SDK later and call initializeSupabase again
+    console.warn('config.js: Supabase JS SDK not found on window (if you are using CDN, ensure <script src="...supabase-js"> is loaded before config.js).');
+  }
+}
+
+// Try to initialize immediately (non-blocking)
 initializeSupabase();
+
 
 // ABSOLUTELY BRAIN-ROTTING TRUTH QUESTIONS 💀
 const TRUTH_QUESTIONS = [
