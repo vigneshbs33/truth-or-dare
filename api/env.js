@@ -3,7 +3,7 @@ export default function handler(req, res) {
   // Add all allowed origins here
   const allowedOrigins = [
     'https://truth-or-dare-bit.vercel.app',
-    'https://truth-or-dare-rcbit.vercel.app'
+    'https://truthordarezone.vercel.app/'
     // If you want to test locally, you can temporarily add:
     // 'http://127.0.0.1:5500', 'http://localhost:5500'
     // Remove local origins before final production deploy.
