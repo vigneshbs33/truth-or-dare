@@ -11,6 +11,7 @@ let SUPABASE_ANON_KEY = null;
  * 2. process.env (when built by Next/Vite)
  * 3. fetch('/api/env') — a small serverless endpoint you can add on Vercel
  */
+// ---------- loadEnv (replace your existing function) ----------
 async function loadEnv() {
   // 1) window.ENV (local static config)
   if (typeof window !== 'undefined' && window.ENV && window.ENV.SUPABASE_URL && window.ENV.SUPABASE_ANON_KEY) {
@@ -22,38 +23,49 @@ async function loadEnv() {
 
   // 2) process.env (works when using Next/Vite/other bundlers)
   if (typeof process !== 'undefined' && process && process.env) {
-    // check common prefixes (NEXT_PUBLIC_ or VITE_)
     SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL || null;
     SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || null;
-
     if (SUPABASE_URL && SUPABASE_ANON_KEY) {
       console.log('config.js: using process.env for supabase creds');
       return;
     }
   }
 
-  // 3) Try to fetch from /api/env (useful for static site on Vercel)
+  // 3) Try to fetch from /api/env using POST (your api/env.js requires POST + same-origin)
   try {
-    const resp = await fetch('/api/env', { cache: 'no-store' });
-    if (resp.ok) {
+    const resp = await fetch('/api/env', {
+      method: 'POST',
+      credentials: 'same-origin', // send cookies/origin info if needed
+      cache: 'no-store',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+      // no body required
+    });
+
+    if (!resp.ok) {
+      // helpful debugging output: status + text
+      const text = await resp.text().catch(() => '');
+      console.log('config.js: /api/env returned', resp.status, text);
+    } else {
+      // parse JSON only when ok
       const data = await resp.json();
       if (data.SUPABASE_URL && data.SUPABASE_ANON_KEY) {
         console.log('config.js: loaded supabase creds from /api/env');
         SUPABASE_URL = data.SUPABASE_URL;
         SUPABASE_ANON_KEY = data.SUPABASE_ANON_KEY;
         return;
+      } else {
+        console.log('config.js: /api/env returned JSON but missing keys', data);
       }
-    } else {
-      console.log('config.js: /api/env returned', resp.status);
     }
   } catch (e) {
-    // ignore: endpoint may not exist
     console.log('config.js: /api/env fetch failed (probably not present)', e && e.message ? e.message : e);
   }
 
-  // No env found
   console.warn('config.js: No Supabase credentials found. Add window.ENV (local), set env vars for your build (NEXT_PUBLIC_ or VITE_), or create /api/env on your host.');
 }
+
 
 /**
  * Wait until window.supabase SDK is loaded (if used via CDN)
