@@ -2,7 +2,7 @@
 
 A chaotic and fun Truth or Dare web game with maximum brain rot and entertainment! Built with pure HTML, CSS, and JavaScript for maximum compatibility and fun.
 
-![Truth or Dare Game](https://img.shields.io/badge/Game-Truth%20or%20Dare-red)
+![Truth or Dare Game](https://truthordarezone.vercel.app/)
 ![Version](https://img.shields.io/badge/Version-2.0-blue)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
