@@ -1,50 +1,70 @@
 // api/env.js
 export default function handler(req, res) {
-  // Add all allowed origins here
+  // list allowed origins WITHOUT trailing slashes
   const allowedOrigins = [
-    'https://truthordarezone.vercel.app/'
+    'https://truth-or-dare-bit.vercel.app',
+    'https://truth-or-dare-rcbit.vercel.app',
+    'https://truthordarezone.vercel.app'
+    // add more domains here if needed (no trailing slash)
   ];
 
-  const requestOrigin = req.headers.origin || '';
-  const referer = req.headers.referer || '';
+  // helper to normalize incoming header values
+  const normalize = (u) => {
+    if (!u) return '';
+    try {
+      return u.trim().replace(/\/+$/, '').toLowerCase();
+    } catch {
+      return u;
+    }
+  };
 
-  // Handle preflight CORS first
+  const requestOrigin = normalize(req.headers.origin || '');
+  const referer = normalize(req.headers.referer || '');
+
+  // Handle preflight (CORS)
   if (req.method === 'OPTIONS') {
-    // If origin present and allowed, echo it back
     if (requestOrigin && allowedOrigins.includes(requestOrigin)) {
       res.setHeader('Access-Control-Allow-Origin', requestOrigin);
+    } else {
+      // echo first allowed origin as fallback (optional)
+      res.setHeader('Access-Control-Allow-Origin', allowedOrigins[0]);
     }
-    // Allow the methods/headers we expect
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    // echo requested headers or allow common headers
+    const acrh = req.headers['access-control-request-headers'] || 'Content-Type';
+    res.setHeader('Access-Control-Allow-Headers', acrh);
     return res.status(204).end();
   }
 
-  // If origin is present, require it to be allowed
-  if (requestOrigin) {
-    if (!allowedOrigins.includes(requestOrigin)) {
-      return res.status(403).json({ error: 'Forbidden (origin)' });
-    }
-    // allowed -> echo it back
-    res.setHeader('Access-Control-Allow-Origin', requestOrigin);
-  } else {
-    // No Origin header (some requests/local tests). Try referer-based check:
-    const allowedByReferer = allowedOrigins.find((o) => referer.startsWith(o));
-    if (!allowedByReferer) {
-      return res.status(403).json({ error: 'Forbidden (referer)' });
-    }
-    // set CORS header to the matching allowed origin
-    res.setHeader('Access-Control-Allow-Origin', allowedByReferer);
-  }
-
-  // Accept only POST
+  // Require POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  // Success: return credentials (anon key is public by design; ensure RLS)
+  // If Origin header present, require it to be in allowedOrigins
+  if (requestOrigin) {
+    if (!allowedOrigins.includes(requestOrigin)) {
+      return res.status(403).json({
+        error: 'Forbidden (origin)',
+        details: { requestOrigin, allowedOrigins }
+      });
+    }
+    res.setHeader('Access-Control-Allow-Origin', requestOrigin);
+  } else {
+    // No origin header: fall back to referer check
+    const matching = allowedOrigins.find(o => referer.startsWith(o));
+    if (!matching) {
+      return res.status(403).json({
+        error: 'Forbidden (referer)',
+        details: { referer, allowedOrigins }
+      });
+    }
+    res.setHeader('Access-Control-Allow-Origin', matching);
+  }
+
+  // If we reached here, origin/referer OK -> return credentials
   return res.status(200).json({
     SUPABASE_URL: process.env.SUPABASE_URL || null,
-    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || null,
+    SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY || null
   });
 }
