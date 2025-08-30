@@ -7,7 +7,7 @@ A chaotic and fun Truth or Dare web game with maximum brain rot and entertainmen
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 
-[**TRY NOW 🔥**](https://truth-or-dare-bit.vercel.app)
+[**TRY NOW 🔥**](https://truthordarezone.vercel.app/)
 
 ## 🌟 Features
 
@@ -23,7 +23,7 @@ A chaotic and fun Truth or Dare web game with maximum brain rot and entertainmen
 ## 🚀 Quick Start
 
 ### Option 1: Live Demo
-Visit the live version: [Truth or Dare - Absolute Chaos Mode](https://truth-or-dare-bit.vercel.app)
+Visit the live version: [Truth or Dare - Absolute Chaos Mode](https://truthordarezone.vercel.app/)
 
 ### Option 2: Local Development
 
@@ -205,7 +205,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 - **GitHub**: [@vigneshbs33](https://github.com/vigneshbs33)
-- **Instagram**: [@rotaract.bit](https://www.instagram.com/rotaract.bit/)
+- **LinkedIn**: [@vigneshbs-dev](https://www.linkedin.com/in/vigneshbs-dev/)
 - **Project**: [Truth or Dare Repository](https://github.com/vigneshbs33/truth-or-dare)
 
 ## 🎉 Special Thanks
