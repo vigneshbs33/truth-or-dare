@@ -853,3 +853,43 @@ h1 {
     60% { transform: translate(2px, 2px); }
     80% { transform: translate(2px, -2px); }
 }
+
+/* Social Links Styling */
+.social-link {
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.social-link:hover::before {
+    left: 100%;
+}
+
+.social-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3) !important;
+}
+
+.social-link:active {
+    transform: translateY(-1px);
+}
+
+/* GitHub specific hover effect */
+.social-link[href*="github"]:hover {
+    background: linear-gradient(135deg, #24292e, #333) !important;
+}
+
+/* LinkedIn specific hover effect */
+.social-link[href*="linkedin"]:hover {
+    background: linear-gradient(135deg, #00a0dc, #0077b5) !important;
+}

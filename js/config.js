@@ -231,10 +231,10 @@ const DARE_CHALLENGES = [
     "🌟 CONTRIBUTE TO THE PROJECT: Go to https://github.com/vigneshbs33/truth-or-dare and star the repository, then take a screenshot and share it! 🌟"
 ];
 
-// Club promotion links
-const CLUB_LINKS = {
-    truth: "https://www.instagram.com/rotaract.bit/",
-    dare: "https://www.instagram.com/rotaract.bit/"
+// Personal links
+const PERSONAL_LINKS = {
+    github: "https://github.com/vigneshbs33",
+    linkedin: "https://www.linkedin.com/in/vigneshbs-dev/"
 };
 
 // Now log the data after it's defined

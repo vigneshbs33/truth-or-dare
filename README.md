@@ -7,7 +7,7 @@ A chaotic and fun Truth or Dare web game with maximum brain rot and entertainmen
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 
-[**TRY NOW 🔥**](https://truth-or-dare-bit.vercel.app)
+[**TRY NOW 🔥**](https://truth-or-dare-vigneshbs33.vercel.app)
 
 ## 🌟 Features
 
@@ -18,12 +18,11 @@ A chaotic and fun Truth or Dare web game with maximum brain rot and entertainmen
 - **🎨 Beautiful UI**: Modern, responsive design with chaos animations
 - **💾 Data Storage**: Supabase integration for storing game data
 - **📸 Image Upload**: Share your dare completions with photo uploads
-- **🎪 Club Promotion**: Integrated Rotaract BIT promotion
 
 ## 🚀 Quick Start
 
 ### Option 1: Live Demo
-Visit the live version: [Truth or Dare - Absolute Chaos Mode](https://your-deployment-url.com)
+Visit the live version: [Truth or Dare - Absolute Chaos Mode](https://truth-or-dare-vigneshbs33.vercel.app)
 
 ### Option 2: Local Development
 
@@ -197,7 +196,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- **Rotaract BIT**: For inspiration and club promotion
 - **Supabase**: For backend services
 - **Open Source Community**: For amazing tools and libraries
 - **All Contributors**: For making this project awesome!
@@ -205,7 +203,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 - **GitHub**: [@vigneshbs33](https://github.com/vigneshbs33)
-- **Instagram**: [@rotaract.bit](https://www.instagram.com/rotaract.bit/)
+- **LinkedIn**: [@vigneshbs-dev](https://www.linkedin.com/in/vigneshbs-dev/)
 - **Project**: [Truth or Dare Repository](https://github.com/vigneshbs33/truth-or-dare)
 
 ## 🎉 Special Thanks

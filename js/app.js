@@ -257,9 +257,9 @@ function showTruthResult(result, showPromotion) {
     document.getElementById('resultText').innerHTML = result;
     
     if (showPromotion) {
-        document.getElementById('clubPromotion').style.display = 'block';
+        document.getElementById('personalPromotion').style.display = 'block';
     } else {
-        document.getElementById('clubPromotion').style.display = 'none';
+        document.getElementById('personalPromotion').style.display = 'none';
     }
 }
 
@@ -335,9 +335,9 @@ function showDareResult(result, showPromotion) {
     document.getElementById('dareResultText').innerHTML = result;
     
     if (showPromotion) {
-        document.getElementById('dareClubPromotion').style.display = 'block';
+        document.getElementById('darePersonalPromotion').style.display = 'block';
     } else {
-        document.getElementById('dareClubPromotion').style.display = 'none';
+        document.getElementById('darePersonalPromotion').style.display = 'none';
     }
 }
 
