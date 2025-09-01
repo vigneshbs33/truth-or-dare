@@ -2,9 +2,8 @@
 export default function handler(req, res) {
   // list allowed origins WITHOUT trailing slashes
   const allowedOrigins = [
-    'https://truth-or-dare-bit.vercel.app',
-    'https://truth-or-dare-rcbit.vercel.app',
-    'https://truthordarezone.vercel.app'
+    'https://your-link',
+
     // add more domains here if needed (no trailing slash)
   ];
 
