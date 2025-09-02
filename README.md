@@ -288,4 +288,4 @@ Thanks to everyone who:
 
 **🔥💀 Remember: This game contains MAXIMUM CHAOS and BRAIN ROT! Proceed at your own risk! 💀🔥**
 
-**Made with 💀 and �� by Vignesh B S**
+**Made by Vignesh B S**
